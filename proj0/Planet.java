@@ -124,5 +124,11 @@ public class Planet {
         }
         return filteredPlanets;
     }
-}
 
+    public void update(double dt, double fX, double fY) {
+        this.xxVel += (fX / this.mass) * dt;
+        this.yyVel += (fY / this.mass) * dt;
+        this.xxPos += this.xxVel * dt;
+        this.yyPos += this.yyVel * dt;
+    }
+}
