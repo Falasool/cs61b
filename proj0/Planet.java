@@ -131,4 +131,11 @@ public class Planet {
         this.xxPos += this.xxVel * dt;
         this.yyPos += this.yyVel * dt;
     }
+
+    /**
+     * uses the StdDraw API mentioned above to draw the Planet’s image at the Planet’s position.
+     */
+    public void draw() {
+        StdDraw.picture(xxPos, yyPos, "images/" + imgFileName);
+    }
 }
