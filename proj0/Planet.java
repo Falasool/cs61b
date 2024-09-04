@@ -125,6 +125,12 @@ public class Planet {
         return filteredPlanets;
     }
 
+    /**
+     * 更新行星位置和速度
+     * @param dt
+     * @param fX
+     * @param fY
+     */
     public void update(double dt, double fX, double fY) {
         this.xxVel += (fX / this.mass) * dt;
         this.yyVel += (fY / this.mass) * dt;
@@ -134,6 +140,7 @@ public class Planet {
 
     /**
      * uses the StdDraw API mentioned above to draw the Planet’s image at the Planet’s position.
+     * 绘制单颗行星
      */
     public void draw() {
         StdDraw.picture(xxPos, yyPos, "images/" + imgFileName);
