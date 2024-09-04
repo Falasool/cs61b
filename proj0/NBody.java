@@ -4,51 +4,49 @@ import java.io.File;
 public class NBody {
     public static void main(String[] args) {
         /**
-         * 绘制星系运动轨迹
+         * 绘制行星轨迹动画：
+         * 1. 绘制静止的单个行星
+         * 2. 绘制静止的多个行星
+         * 3. 每 10ms 重新计算一次行星的值，重新绘制宇宙（动画）
          */
         double T = Double.parseDouble(args[0]);
         double dt = Double.parseDouble(args[1]);
-        // 获取文件名
         String filename = args[2];
-        // 通过读取文件名获取饼储存行星列表
-        double radius = readRadius(filename);
-        Planet[] planetsList = readPlanets(filename);
-        // 设置画布范围
-        StdDraw.setXscale(-radius, radius);
-        StdDraw.setYscale(-radius, radius);
-//        StdDraw.enableDoubleBuffering();
+        double r = readRadius(filename);
+        // 行星列表
+        Planet[] planets = readPlanets(filename);
 
-        double time = 0;
-        while (time < T) {
-            int count = planetsList.length;
-            // 初始化一个长度为 count 的一维数组
-            // Fx 储存所有的x轴方向的分力
-//            double[] xFouces = new double[count];
-            // Fy 储存所有的y轴方向的分力
-//            double[] yFouces = new double[count];
-            // 循环存储行星和它们的分力
-            for (int i = 0; i < count; i++) {
-                Planet planet = planetsList[i];
-//                xFouces[i] = planet.calcForceExertedByX(planet);
-//                yFouces[i] = planet.calcForceExertedByY(planet);
+        // set the universe scale
+        StdDraw.setXscale(-r, r);
+        StdDraw.setYscale(-r, r);
+        StdDraw.enableDoubleBuffering();
+
+        double t = 0;
+        int num = planets.length;
+        while(t <= T){
+            // X轴方向的力的数组 && Y轴方向的力的数组
+            double[] xForces = new double[num];
+            double[] yForces = new double[num];
+            for(int i = 0; i < num; i++){
+                xForces[i] = planets[i].calcNetForceExertedByX(planets);
+                yForces[i] = planets[i].calcNetForceExertedByY(planets);
             }
-            for (int i = 0; i < count; i++) {
-//                double forceX = xFouces[i];
-//                double forceY = yFouces[i];
-//                Planet planet = planetsList[i];
-                // 更新行星位置和速度
-//                planet.update(dt, forceX, forceY);
+            // 更新每个行星的位置和速度和加速度
+            for(int i = 0; i < num; i++){
+                planets[i].update(dt, xForces[i], yForces[i]);
             }
-//            StdDraw.clear();
+
+            // draw the backgroud picture
             StdDraw.picture(0, 0, "images/starfield.jpg");
 
-            for (Planet planet : planetsList) {
+            // draw all the planets
+            for (Planet planet : planets) {
                 planet.draw();
             }
 
-//            StdDraw.show();
-//            StdDraw.pause(10);
-//            time += dt;
+            StdDraw.show();
+            StdDraw.pause(10);
+            t += dt;
         }
     }
 

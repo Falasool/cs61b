@@ -126,7 +126,7 @@ public class Planet {
     }
 
     /**
-     * 更新行星位置和速度
+     * 更新行星位置和速度和加速度
      * @param dt
      * @param fX
      * @param fY
